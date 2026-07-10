@@ -3,7 +3,7 @@ package main
 import "plugin" 
 
 func main() {
-    plug, err   := plugin.Open("./build/tests/test.so")
+    plug, err   := plugin.Open("./build/scripts/example_script.so")
     if err != nil {
         panic(err)
     }
