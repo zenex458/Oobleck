@@ -1,8 +1,17 @@
-# Oobleck - system hardener
+<h1 align="center">Oobleck</h1>
+<p align="center">Your own personal pentester</p>
+
 ## About
-Oobleck is a system hardener that will attempt to point out various vulnerabilities within your system. It is a collection of largely independent scripts that are all run together. It can identify, elaborate on and fix issues that it encounters.
+Oobleck is a system hardener/auto-pentesting tool which provides diagnostics and suggestions to increase the security and anonymity of your system.
 
-## Contributing
-We do not yet have contribution guidelines. The core of the Oobleck app is being focused on, and we won't accept contributions outside of a select few invited members.
+At its core, it is a series of scripts that test some isolated portion of your system. 
 
-After the core of the app has been developed, we will start accepting contributions from everybody!
+## Use
+Oobleck is in early development, as a result we do not have an official release set up to easily install it.
+
+### Compiling from source
+1. Install Golang from your package manager or the Golang website
+2. Install git from your package manager or the git-scm website
+3. Clone the repo with `git clone https://github.com/NCFAGlobal/Oobleck`
+4. Run `make` 
+5. Run `./build/Oobleck` from the root of the project
