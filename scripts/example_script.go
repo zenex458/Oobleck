@@ -11,14 +11,14 @@ func Prereq() bool {
 
 // Name is a human-readable identifier of the script (it is NOT a unique ID, and
 // should not be used as so)
-const Name string = "Example test"
+var Name string = "Example test"
 
 // Description is a short description of what the script tests for
-const Description string = "Example test"
+var Description string = "Example test"
 
 // Categories is a list of tags that can help a user piece together what a 
 // given script checks for
-var Categories = [...]string{"example_tag"}
+var Categories = []string{"example_tag"}
 
 // Check is where the actual checking logic occurs, if it returns true then a
 // fault has been found and will be flagged to the user
