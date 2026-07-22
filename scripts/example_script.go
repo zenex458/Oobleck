@@ -2,6 +2,10 @@ package main
 
 import "fmt"
 
+func Prereq() bool {
+    return true;
+}
+
 func Name() string {
     return "Example test"
 }
