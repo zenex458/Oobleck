@@ -16,13 +16,13 @@ func main() {
 
         plug, err   := plugin.Open(path)
         if err != nil {
-            fmt.Printf("Skipping %s (plugin couldn't be opened)\n", path)
+            fmt.Printf("ERROR:\tSkipping %s (plugin couldn't be opened)\n", path)
             return nil;
         }
 
         name, err     := plug.Lookup("Name")
         if err != nil {
-            fmt.Printf("Skipping %s (`Test` symbol not found)\n", path)
+            fmt.Printf("ERROR:\tSkipping %s (`Test` symbol not found)\n", path)
             return nil;
         }
 
