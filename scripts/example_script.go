@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 func Prereq() bool {
-    return true;
+    return true
 }
 
 func Name() string {
@@ -16,6 +16,10 @@ func Description() string {
 
 func Categories() []string {
     return []string{}
+}
+
+func Check() bool {
+    return true
 }
 
 func FixDescription() string {
