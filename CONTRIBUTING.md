@@ -3,6 +3,7 @@ Thank you for considering to contribute! We accept contributions from any skill 
 
 ## Steps to contribute 
 1. Find or make an issue
+
 The "good first issue" tag is a good place to look for newer contributors.
 
 If your idea for a contribution isn't already in the issues list, you can make an issue.
@@ -10,12 +11,14 @@ If your idea for a contribution isn't already in the issues list, you can make a
 For some, this is where the contribution process ends! But, if you want to work on the issue yourself, make a comment asking for assignment.
 
 2. Create a fork and a branch to work on the issue
+
 **After** you've been assigned to the issue, you can create a fork of Oobleck. On this fork, make a new branch named after the issue/feature that you're adding.
 
 3. Work on the issue
 
 4. Open a Pull Request from your fork's branch
-Ensure to describe *how* you solved the problem, and why you made those decisions.
+
+Ensure to describe *how* you solved the problem, and *why* you made those decisions.
 
 From there, simply respond to the comments of pull request. The path from here on out will be slightly different depending on the nature of the issue or feature.
 
