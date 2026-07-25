@@ -74,7 +74,7 @@ func main() {
 
         // Running tests
         if check.(func() bool)() {
-            fmt.Printf("---- %s ----\nNAME: %s\nDESCRIPTION: %s\nCATEGORIES: %s\nFIX DESCRIPTIONS: %s\n", path, *name.(*string), *description.(*string), *categories.(*[]string), fixdescription.(func() string)())
+            fmt.Printf("---- %s ----\nNAME: %s\nDESCRIPTION: %s\nCATEGORIES: %s\nFIX DESCRIPTIONS: %s\n\n", path, *name.(*string), *description.(*string), *categories.(*[]string), fixdescription.(func() string)())
         }
 
         return nil
