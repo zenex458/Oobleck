@@ -4,14 +4,16 @@
 ## About
 Oobleck is a system hardener/auto-pentesting tool which provides diagnostics and suggestions to increase the security and anonymity of your system.
 
-At its core, it is a series of scripts that test some isolated portion of your system. 
+At its core, it is a series of scripts that test some isolated portion of your system and report on any potential vulnerabilities it finds. 
 
 ## Use
-Oobleck is in early development, as a result we do not have an official release set up to easily install it.
+At the moment, Oobleck must be compiled from source.
 
 ### Compiling from source
-1. Install Golang from your package manager or the Golang website
-2. Install git from your package manager or the git-scm website
+1. Install Golang from your package manager or the [Golang website](https://go.dev/)
+2. Install git from your package manager or the [git-scm website](https://git-scm.com/)
 3. Clone the repo with `git clone https://github.com/NCFAGlobal/Oobleck`
 4. Run `make` 
 5. Run `./build/Oobleck` from the root of the project
+
+Alternatively, if you do not wish to compile all the built-in tests, you can simply run `go build -o build/Oobleck main.go` instead of step 4.
