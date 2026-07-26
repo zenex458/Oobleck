@@ -34,38 +34,38 @@ func main() {
         }
 
         // Unwrapping other script symbols
-        name, err := plug.Lookup("Name");
-        if err != nil {
-            fmt.Printf("ERROR:\tSkipping %s (symbol `Name` not found)\n", path)
-            return nil
+        var name string = filepath.Base(path)
+        nameSymbol, err := plug.Lookup("Name")
+        if err == nil {
+            name = *nameSymbol.(*string)
         }
 
-        description, err := plug.Lookup("Description");
+        description, err := plug.Lookup("Description")
         if err != nil {
             fmt.Printf("ERROR:\tSkipping %s (symbol `Description` not found)\n", path)
             return nil
         }
 
-        categories, err := plug.Lookup("Categories");
+        categories, err := plug.Lookup("Categories")
         if err != nil {
             fmt.Printf("ERROR:\tSkipping %s (symbol `Categories` not found)\n", path)
             return nil
         }
 
-        check, err := plug.Lookup("Check");
+        check, err := plug.Lookup("Check")
         if err != nil {
             fmt.Printf("ERROR:\tSkipping %s (symbol `Check` not found)\n", path)
             return nil
         }
 
-        fixdescription, err := plug.Lookup("FixDescription");
+        fixdescription, err := plug.Lookup("FixDescription")
         if err != nil {
             fmt.Printf("ERROR:\tSkipping %s (symbol `FixDescription` not found)\n", path)
             return nil
         }
 
         /*
-        fixauto, err := plug.Lookup("FixAuto");
+        fixauto, err := plug.Lookup("FixAuto")
         if err != nil {
             fmt.Printf("ERROR:\tSkipping %s (symbol `FixAuto` not found)\n", path)
             return nil
@@ -74,7 +74,7 @@ func main() {
 
         // Running tests
         if check.(func() bool)() {
-            fmt.Printf("---- %s ----\nNAME: %s\nDESCRIPTION: %s\nCATEGORIES: %s\nFIX DESCRIPTIONS: %s\n\n", path, *name.(*string), *description.(*string), *categories.(*[]string), fixdescription.(func() string)())
+            fmt.Printf("---- %s ----\nNAME: %s\nDESCRIPTION: %s\nCATEGORIES: %s\nFIX DESCRIPTIONS: %s\n\n", path, name, *description.(*string), *categories.(*[]string), fixdescription.(func() string)())
         }
 
         return nil
