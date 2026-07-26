@@ -34,22 +34,22 @@ func main() {
         }
 
         // Unwrapping other script symbols
-        var name string = filepath.Base(path)
+        name := filepath.Base(path)
         nameSymbol, err := plug.Lookup("Name")
         if err == nil {
             name = *nameSymbol.(*string)
         }
 
-        description, err := plug.Lookup("Description")
-        if err != nil {
-            fmt.Printf("ERROR:\tSkipping %s (symbol `Description` not found)\n", path)
-            return nil
+        description := "None provided."
+        descriptionSymbol, err := plug.Lookup("Description")
+        if err == nil {
+            description = *descriptionSymbol.(*string)
         }
 
-        categories, err := plug.Lookup("Categories")
-        if err != nil {
-            fmt.Printf("ERROR:\tSkipping %s (symbol `Categories` not found)\n", path)
-            return nil
+        categories := []string{"uncategorised"}
+        categoriesSymbol, err := plug.Lookup("Categories")
+        if err == nil {
+            categories = *categoriesSymbol.(*[]string)
         }
 
         check, err := plug.Lookup("Check")
@@ -58,7 +58,7 @@ func main() {
             return nil
         }
 
-        fixdescription, err := plug.Lookup("FixDescription")
+        fixDescription, err := plug.Lookup("FixDescription")
         if err != nil {
             fmt.Printf("ERROR:\tSkipping %s (symbol `FixDescription` not found)\n", path)
             return nil
@@ -74,7 +74,7 @@ func main() {
 
         // Running tests
         if check.(func() bool)() {
-            fmt.Printf("---- %s ----\nNAME: %s\nDESCRIPTION: %s\nCATEGORIES: %s\nFIX DESCRIPTIONS: %s\n\n", path, name, *description.(*string), *categories.(*[]string), fixdescription.(func() string)())
+            fmt.Printf("---- %s ----\nNAME: %s\nDESCRIPTION: %s\nCATEGORIES: %s\nFIX DESCRIPTIONS: %s\n\n", path, name, description, categories, fixDescription.(func() string)())
         }
 
         return nil
