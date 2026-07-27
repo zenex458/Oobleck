@@ -7,10 +7,11 @@ import (
     "plugin" 
 )
 
-// if `symbol` has no default value then the function will return `defaultvalue`
-func setdefaultvalue[strorslice string | []string](defaultvalue strorslice, symbol plugin.Symbol, er error) strorslice {
-    if er == nil {
-		    return *symbol.(*strorslice)
+// if the symbol with field of `symbolname' has no default value then the function will return `defaultvalue`
+func setdefaultvalue[strorslice string | []string](defaultvalue strorslice, symbolname string, plug *plugin.Plugin) strorslice {
+		lookup, err := plug.Lookup(symbolname)
+    if err == nil {
+		    return *lookup.(*strorslice)
 		}
 		return defaultvalue
 }
@@ -42,12 +43,9 @@ func main() {
         }
 
         // Unwrapping other script symbols
-        nameSymbol, err := plug.Lookup("Name")
-        name := setdefaultvalue(filepath.Base(path), nameSymbol, err)
-        descriptionSymbol, err := plug.Lookup("Description")
-        description := setdefaultvalue("None provided.", descriptionSymbol, err)
-        categoriesSymbol, err := plug.Lookup("Categories")
-        categories := setdefaultvalue([]string{"uncategorised"}, categoriesSymbol, err)
+        name := setdefaultvalue(filepath.Base(path), "Name", plug)
+        description := setdefaultvalue("None provided.", "Description", plug)
+        categories := setdefaultvalue([]string{"uncategorised"}, "Categories", plug)
 
         check, err := plug.Lookup("Check")
         if err != nil {
