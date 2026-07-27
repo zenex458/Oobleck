@@ -7,6 +7,7 @@ import (
     "plugin" 
     "os"
     "runtime"
+    "errors"
 )
 
 // if the symbol with field of `symbolname' has no default value then the function will return `defaultvalue`
@@ -20,6 +21,14 @@ func setdefaultvalue[strorslice string | []string](defaultvalue strorslice, symb
 
 // Recursively walks a directory in search for test files and attempts to run them
 func runTests(testPath string) {
+    // Checking for testPath's existance 
+    _, err := os.Stat(testPath)
+    if errors.Is(err, fs.ErrNotExist) {
+        fmt.Printf("ERROR:\tSkipping directory %s (directory doesn't exist)\n", testPath)
+        return 
+    }
+
+    // Walking testPath
     filepath.WalkDir(testPath, func(path string, d fs.DirEntry, err error) error {
         // Skipping directories
         if d.IsDir() {
