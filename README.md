@@ -9,11 +9,10 @@ At its core, it is a series of scripts that test some isolated portion of your s
 ## Use
 At the moment, Oobleck must be compiled from source.
 
-### Compiling from source
+### Compiling from source and running the program
 1. Install Golang from your package manager or the [Golang website](https://go.dev/)
 2. Install git from your package manager or the [git-scm website](https://git-scm.com/)
 3. Clone the repo with `git clone https://github.com/NCFAGlobal/Oobleck`
-4. Run `make` 
-5. Run `./build/Oobleck` from the root of the project
+4. Run `make run` from the root of the project
 
-Alternatively, if you do not wish to compile all the built-in tests, you can simply run `go build -o build/Oobleck main.go` instead of step 4.
+Alternatively, if you do not wish to compile all the built-in tests, you can simply run `make build/Oobleck` instead of step 4.
