@@ -7,6 +7,15 @@ import (
     "plugin" 
 )
 
+// if the symbol with field of `symbolname' has no default value then the function will return `defaultvalue`
+func setdefaultvalue[strorslice string | []string](defaultvalue strorslice, symbolname string, plug *plugin.Plugin) strorslice {
+		lookup, err := plug.Lookup(symbolname)
+    if err == nil {
+		    return *lookup.(*strorslice)
+		}
+		return defaultvalue
+}
+
 func main() {
     // TODO: make "./build/scripts/" part of this cwd-agnostic
     filepath.WalkDir("./build/scripts", func(path string, d fs.DirEntry, err error) error {
@@ -34,38 +43,24 @@ func main() {
         }
 
         // Unwrapping other script symbols
-        name, err := plug.Lookup("Name");
-        if err != nil {
-            fmt.Printf("ERROR:\tSkipping %s (symbol `Name` not found)\n", path)
-            return nil
-        }
+        name := setdefaultvalue(filepath.Base(path), "Name", plug)
+        description := setdefaultvalue("None provided.", "Description", plug)
+        categories := setdefaultvalue([]string{"uncategorised"}, "Categories", plug)
 
-        description, err := plug.Lookup("Description");
-        if err != nil {
-            fmt.Printf("ERROR:\tSkipping %s (symbol `Description` not found)\n", path)
-            return nil
-        }
-
-        categories, err := plug.Lookup("Categories");
-        if err != nil {
-            fmt.Printf("ERROR:\tSkipping %s (symbol `Categories` not found)\n", path)
-            return nil
-        }
-
-        check, err := plug.Lookup("Check");
+        check, err := plug.Lookup("Check")
         if err != nil {
             fmt.Printf("ERROR:\tSkipping %s (symbol `Check` not found)\n", path)
             return nil
         }
 
-        fixdescription, err := plug.Lookup("FixDescription");
+        fixDescription, err := plug.Lookup("FixDescription")
         if err != nil {
             fmt.Printf("ERROR:\tSkipping %s (symbol `FixDescription` not found)\n", path)
             return nil
         }
 
         /*
-        fixauto, err := plug.Lookup("FixAuto");
+        fixauto, err := plug.Lookup("FixAuto")
         if err != nil {
             fmt.Printf("ERROR:\tSkipping %s (symbol `FixAuto` not found)\n", path)
             return nil
@@ -74,7 +69,7 @@ func main() {
 
         // Running tests
         if check.(func() bool)() {
-            fmt.Printf("---- %s ----\nNAME: %s\nDESCRIPTION: %s\nCATEGORIES: %s\nFIX DESCRIPTIONS: %s\n\n", path, *name.(*string), *description.(*string), *categories.(*[]string), fixdescription.(func() string)())
+            fmt.Printf("---- %s ----\nNAME: %s\nDESCRIPTION: %s\nCATEGORIES: %s\nFIX DESCRIPTIONS: %s\n\n", path, name, description, categories, fixDescription.(func() string)())
         }
 
         return nil
