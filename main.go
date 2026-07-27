@@ -7,6 +7,15 @@ import (
     "plugin" 
 )
 
+// if the symbol with field of `symbolname' has no default value then the function will return `defaultvalue`
+func setdefaultvalue[strorslice string | []string](defaultvalue strorslice, symbolname string, plug *plugin.Plugin) strorslice {
+		lookup, err := plug.Lookup(symbolname)
+    if err == nil {
+		    return *lookup.(*strorslice)
+		}
+		return defaultvalue
+}
+
 func main() {
     // TODO: make "./build/scripts/" part of this cwd-agnostic
     filepath.WalkDir("./build/scripts", func(path string, d fs.DirEntry, err error) error {
@@ -34,23 +43,9 @@ func main() {
         }
 
         // Unwrapping other script symbols
-        name := filepath.Base(path)
-        nameSymbol, err := plug.Lookup("Name")
-        if err == nil {
-            name = *nameSymbol.(*string)
-        }
-
-        description := "None provided."
-        descriptionSymbol, err := plug.Lookup("Description")
-        if err == nil {
-            description = *descriptionSymbol.(*string)
-        }
-
-        categories := []string{"uncategorised"}
-        categoriesSymbol, err := plug.Lookup("Categories")
-        if err == nil {
-            categories = *categoriesSymbol.(*[]string)
-        }
+        name := setdefaultvalue(filepath.Base(path), "Name", plug)
+        description := setdefaultvalue("None provided.", "Description", plug)
+        categories := setdefaultvalue([]string{"uncategorised"}, "Categories", plug)
 
         check, err := plug.Lookup("Check")
         if err != nil {
