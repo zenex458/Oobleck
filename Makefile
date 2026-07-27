@@ -1,17 +1,23 @@
-scripts=example_script
+scripts=$(shell find scripts/ -type f -exec basename {} .go \;)
+buildplugins=$(foreach wrd,$(scripts),go build -buildmode=plugin -o build/scripts/$(wrd).so scripts/$(wrd).go;)
+buildpluginsrelease=$(foreach wrd,$(scripts),go build -ldflags '-w -s' -buildmode=plugin -o build/scripts/$(wrd).so scripts/$(wrd).go;)
+scriptsobjects=$(foreach wrd,$(scripts),$(wrd).so)
 
-all: $(scripts) build/Oobleck
-.PHONY: all
 
-# Preparing build directory
-build:
-	mkdir -p build/scripts
+.PHONY: run release clean
+
+build/scripts/$(scriptsobjects): build/Oobleck
+	$(buildplugins)
 
 build/Oobleck: main.go
 	go build -o build/Oobleck main.go
 
-$(scripts): # TODO: this is inefficient, I'm not knowledgable in make, but this recompiles everytime and it should only recompile when changes in $@.go are made
-	go build -buildmode=plugin -o build/scripts/$@.so scripts/$@.go
+run: build/scripts/$(scripts).so
+	./build/Oobleck
+
+release:
+	go build -ldflags '-w -s' -o build/Oobleck main.go
+	$(buildpluginsrelease)
 
 clean:
 	rm -rf build

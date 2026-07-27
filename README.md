@@ -14,6 +14,6 @@ At the moment, Oobleck must be compiled from source.
 2. Install git from your package manager or the [git-scm website](https://git-scm.com/)
 3. Clone the repo with `git clone https://github.com/NCFAGlobal/Oobleck`
 4. Run `make` 
-5. Run `./build/Oobleck` from the root of the project
+5. Run `make run` from the root of the project
 
 Alternatively, if you do not wish to compile all the built-in tests, you can simply run `go build -o build/Oobleck main.go` instead of step 4.
