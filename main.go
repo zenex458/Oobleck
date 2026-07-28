@@ -95,10 +95,14 @@ func main() {
     }
 
     // Run tests in various config directories
+    configDir, err := os.UserConfigDir()
+    if err == nil {
+        runTests(configDir + "/oobleck/tests")
+    }
+
     if runtime.GOOS == "windows" {
-        // TODO 
+        runTests("C:\\ProgramData\\oobleck\\tests")
     } else {
-        runTests("~/.config/oobleck/tests")
         runTests("/etc/oobleck/tests")
     }
 
