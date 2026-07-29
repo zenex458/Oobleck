@@ -5,6 +5,9 @@ import (
     "io/fs"
     "path/filepath"
     "plugin" 
+    "os"
+    "runtime"
+    "errors"
 )
 
 // if the symbol with field of `symbolname' has no default value then the function will return `defaultvalue`
@@ -16,9 +19,17 @@ func setdefaultvalue[strorslice string | []string](defaultvalue strorslice, symb
 		return defaultvalue
 }
 
-func main() {
-    // TODO: make "./build/scripts/" part of this cwd-agnostic
-    filepath.WalkDir("./build/scripts", func(path string, d fs.DirEntry, err error) error {
+// Recursively walks a directory in search for test files and attempts to run them
+func runTests(testPath string) {
+    // Checking for testPath's existance 
+    _, err := os.Stat(testPath)
+    if errors.Is(err, fs.ErrNotExist) {
+        fmt.Printf("ERROR:\tSkipping directory %s (directory doesn't exist)\n", testPath)
+        return 
+    }
+
+    // Walking testPath
+    filepath.WalkDir(testPath, func(path string, d fs.DirEntry, err error) error {
         // Skipping directories
         if d.IsDir() {
             return nil
@@ -76,3 +87,28 @@ func main() {
     })
 }
 
+func main() {
+    // Run tests relative to the executable path in /scripts
+    exePath, err := os.Executable()
+    if err == nil {
+        runTests(filepath.Dir(exePath) + "/scripts")
+    }
+
+    // Run tests in various config directories
+    configDir, err := os.UserConfigDir()
+    if err == nil {
+        runTests(configDir + "/oobleck/tests")
+    }
+
+    if runtime.GOOS == "windows" {
+        runTests("C:\\ProgramData\\oobleck\\tests")
+    } else {
+        runTests("/etc/oobleck/tests")
+    }
+
+    // Run tests in a given environment variable
+    env := os.Getenv("OOB_TESTS_DIR")
+    if env != "" {
+        runTests(env)
+    }
+}
