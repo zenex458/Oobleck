@@ -21,7 +21,7 @@ jobs:
           go-version: stable
       - name: sent env
         run: |
-          echo $(date "+%Y%d%m%s") >> $CURDATE
+          echo "$CURDATE=$(date \"+%Y%d%m%s\")" >> $GITHUB_ENV
       - name: Create tag
         run: |
           git tag $CURDATE
