@@ -25,13 +25,14 @@ jobs:
       - name: Create tag
         run: |
           git tag ${{ github.ref_name }}
-          git push origin ${{ github.ref_name }}
+          git push origin ${{ github.sha }}
       - name: Build
         run: |
           make
       - name: Release
         uses: softprops/action-gh-release@v3
         with:
+          tag_name: github.sha
           files: build/**
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
