@@ -24,7 +24,7 @@ jobs:
           echo "CURDATE=$(date '+%Y%d%m%s')" >> $GITHUB_ENV
       - name: Create tag
         run: |
-          git tag ${{ github.ref_name }}
+          git tag ${{ github.sha }}
           git push origin ${{ github.sha }}
       - name: Build
         run: |
