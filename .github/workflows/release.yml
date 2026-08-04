@@ -1,0 +1,39 @@
+# name: release
+# on:
+#   push:
+#     branches:
+#       - main
+# permissions:
+#   contents: write
+# jobs:
+#   release:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v7
+#       - name: Set up Go
+#         uses: actions/setup-go@v7
+#         with:
+#           go-version: stable
+#       - name: set env
+#         run: |
+#           echo "CURDATE=$(date '+%Y%d%m%s')" >> $GITHUB_ENV
+#       - name: Create tag
+#         run: |
+#           git config user.name "GitHub Actions"
+#           git config user.email "github-actions@users.noreply.github.com"
+#           git tag "$CURDATE"
+#           git push origin "$CURDATE"
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#       - name: Build
+#         run: |
+#           make release
+#       - name: Release
+#         uses: softprops/action-gh-release@v3
+#         with:
+#           tag_name: ${{ env.CURDATE }}
+#           files: build/**
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
