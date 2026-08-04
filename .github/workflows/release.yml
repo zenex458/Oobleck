@@ -9,8 +9,12 @@ on:
 permissions:
   contents: write
 
+env:
+  curdate: $(date "+%Y%d%m%s")
+  
+
 jobs:
-  goreleaser:
+  release:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -21,8 +25,8 @@ jobs:
           go-version: stable
       - name: Create tag
         run: |
-          curdate=$(date "+%Y%d%m%s")
-          git tag $curdate
+          # curdate=$(date "+%Y%d%m%s")
+          git tag "$curdate"
           git push origin $curdate
       - name: Build
         run: |
@@ -30,7 +34,9 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v3
         with:
+          tag_name: curdate
           files: build/*
+
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
