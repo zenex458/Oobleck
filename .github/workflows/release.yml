@@ -9,10 +9,6 @@ on:
 permissions:
   contents: write
 
-env:
-  curdate: $(date "+%Y%d%m%s")
-  
-
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -23,10 +19,12 @@ jobs:
         uses: actions/setup-go@v7
         with:
           go-version: stable
+      - name: sent env
+        run: |
+          echo $(date "+%Y%d%m%s") >> $CURDATE
       - name: Create tag
         run: |
-          # curdate=$(date "+%Y%d%m%s")
-          git tag "$curdate"
+          git tag $CURDATE
           git push origin $curdate
       - name: Build
         run: |
@@ -34,7 +32,7 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v3
         with:
-          tag_name: curdate
+          tag_name: $CURDATE
           files: build/*
 
         env:
