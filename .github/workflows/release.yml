@@ -24,16 +24,16 @@ jobs:
           echo "CURDATE=$(date '+%Y%d%m%s')" >> $GITHUB_ENV
       - name: Create tag
         run: |
-          git tag $CURDATE
-          git push origin $curdate
+          git tag "$CURDATE"
+          git push origin "$CURDATE"
       - name: Build
         run: |
           make
       - name: Release
         uses: softprops/action-gh-release@v3
         with:
-          tag_name: $CURDATE
-          files: build/*
+          # tag_name: $CURDATE
+          files: build/**
 
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
