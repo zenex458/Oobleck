@@ -31,7 +31,7 @@ jobs:
           make
       - name: Checkout tag
         run: |
-          git switch --detatch "$CURDATE"     
+          git switch --detach "$CURDATE"     
       - name: Release
         uses: softprops/action-gh-release@v3
         with:
