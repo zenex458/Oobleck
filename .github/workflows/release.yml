@@ -2,9 +2,8 @@ name: release
 
 on:
   push:
-     branches:
-      - main
-      - feat/release-action
+    tags:
+      - "*"
 
 permissions:
   contents: write
@@ -15,23 +14,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
-      - name: Set up Go
-        uses: actions/setup-go@v7
-        with:
-          go-version: stable
-      - name: set env
-        run: |
-          echo "CURDATE=$(date '+%Y%d%m%s')" >> $GITHUB_ENV
-      - name: Create tag
-        run: |
-          git tag "$CURDATE"
-          git push origin "$CURDATE"
-      - name: Build
-        run: |
-          make
-      - name: Checkout tag
-        run: |
-          git switch --detach "$CURDATE"     
       - name: Release
         uses: softprops/action-gh-release@v3
         with:

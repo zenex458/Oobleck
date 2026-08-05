@@ -1,0 +1,31 @@
+name: tag
+
+on:
+  push:
+     branches:
+      - main
+      - feat/release-action
+
+permissions:
+  contents: write
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Set up Go
+        uses: actions/setup-go@v7
+        with:
+          go-version: stable
+      - name: set env
+        run: |
+          echo "CURDATE=$(date '+%Y%d%m%s')" >> $GITHUB_ENV
+      - name: Create tag
+        run: |
+          git tag "$CURDATE"
+          git push origin "$CURDATE"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
