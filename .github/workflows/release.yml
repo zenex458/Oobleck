@@ -27,16 +27,9 @@ jobs:
           git push origin "$CURDATE"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      # - name: Checkout
-      #   uses: actions/checkout@v7
-      #   with:
-      #     fetch-depth: 0
-      #     fetch-tags: true
-      #     ref: ${{ env.CURDATE }}
       - name: Build
         run: |
-          # make release
-          echo test
+          make release
       - name: Release
         uses: softprops/action-gh-release@v3
         with:
