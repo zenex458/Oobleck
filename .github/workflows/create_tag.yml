@@ -1,16 +1,13 @@
-name: tag
-
+name: create_tag
 on:
   push:
      branches:
       - main
       - feat/release-action
-
 permissions:
   contents: write
-
 jobs:
-  tag:
+  create_tag:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -24,9 +21,7 @@ jobs:
           echo "CURDATE=$(date '+%Y%d%m%s')" >> $GITHUB_ENV
       - name: Create tag
         run: |
-          git config --global user.email "bot@github.com"
-           git config --global user.name "bot"
-          git tag -a "$CURDATE" -m "test"
+          git tag "$CURDATE"
           git push origin "$CURDATE"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
