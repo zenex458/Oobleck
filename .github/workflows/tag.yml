@@ -1,11 +1,8 @@
-name: release
+name: tag
 
 on:
-  workflow_run:
-    workflows: ["tag"]
-    types:
-      - completed
-    branches:
+  push:
+     branches:
       - main
       - feat/release-action
 
@@ -13,7 +10,7 @@ permissions:
   contents: write
 
 jobs:
-  release:
+  tag:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -22,13 +19,11 @@ jobs:
         uses: actions/setup-go@v7
         with:
           go-version: stable
-      - name: Build
+      - name: Create tag
         run: |
-          make
-      - name: Release
-        uses: softprops/action-gh-release@v3
-        with:
-          files: build/**
+          curdate=$(date "+%Y%d%m%s")
+          git tag "$curdate"
+          git push origin "$curdate"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
