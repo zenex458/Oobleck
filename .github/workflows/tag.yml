@@ -1,4 +1,4 @@
-name: tags
+name: Run Tests
 
 on:
   push:
@@ -10,7 +10,7 @@ permissions:
   contents: write
 
 jobs:
-  tags:
+  tag:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
