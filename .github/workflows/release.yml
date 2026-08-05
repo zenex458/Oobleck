@@ -3,7 +3,7 @@ name: release
 on:
   push:
     tags:
-      - '20*'
+      - 20*
 
 permissions:
   contents: write
@@ -16,10 +16,7 @@ jobs:
         uses: actions/checkout@v7
       - name: Build
         run: |
-          make
-      - name: Checkout tag
-        run: |
-          git switch --detach "$CURDATE"     
+          make release
       - name: Release
         uses: softprops/action-gh-release@v3
         with:
