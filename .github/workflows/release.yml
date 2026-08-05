@@ -19,30 +19,33 @@ jobs:
       - name: set env
         run: |
           echo "CURDATE=$(date '+%Y%d%m%s')" >> $GITHUB_ENV
-      - name: Create tag
-        run: |
-          git config user.name "GitHub Actions"
-          git config user.email "github-actions@users.noreply.github.com"
-          git tag "$CURDATE"
-          git push origin "$CURDATE"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Create tag
+      #   run: |
+      #     git config user.name "GitHub Actions"
+      #     git config user.email "github-actions@users.noreply.github.com"
+      #     git tag "$CURDATE"
+      #     git push origin "$CURDATE"
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Checkout
         uses: actions/checkout@v7
         with:
           fetch-depth: 0
           fetch-tags: true
           ref: ${{ vars.CURDATE }}
-        env:
-          CURDATE: ${{ vars.CURDATE }}
       - name: Build
         run: |
           # make release
           echo test
       - name: Release
         uses: softprops/action-gh-release@v3
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git tag "$CURDATE"
+          git push origin "$CURDATE"
         with:
-          tag_name: ${{ github.actor_id }}
+          tag_name: ${{ github.curdate }}
           files: build/**
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
