@@ -39,10 +39,12 @@ jobs:
           ref: ${{ vars.CURDATE }}
       - name: Build
         run: |
-          make release
+          # make release
+          echo test
       - name: Release
         uses: softprops/action-gh-release@v3
         with:
+          tag_name: ${{ vars.CURDATE }}
           name: ${{ vars.CURDATE }}
           files: build/**
         env:
