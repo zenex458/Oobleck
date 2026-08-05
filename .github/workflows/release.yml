@@ -40,7 +40,7 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v3
         with:
-          name: \$(date)
+          tag_name: \$(date)
           files: build/**
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
