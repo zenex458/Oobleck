@@ -19,8 +19,9 @@ jobs:
           make release
       - name: Release
         uses: softprops/action-gh-release@v3
-        # with:
-        #   files: build/**
+        if: github.ref_type == 'tag'
+        with:
+          files: build/**
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
