@@ -32,7 +32,7 @@ name: release
 
 on:
   workflow_run:
-    workflows: [tag]
+    workflows: [tags]
     types: [completed]
 
 jobs:
