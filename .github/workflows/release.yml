@@ -19,7 +19,7 @@ jobs:
         uses: actions/setup-go@v7
         with:
           go-version: stable
-      - name: sent env
+      - name: set env
         run: |
           echo "CURDATE=$(date '+%Y%d%m%s')" >> $GITHUB_ENV
       - name: Create tag
@@ -31,7 +31,7 @@ jobs:
           make
       - name: Checkout tag
         run: |
-          git checkout "$CURDATE"     
+          git switch --detatch "$CURDATE"     
       - name: Release
         uses: softprops/action-gh-release@v3
         with:
