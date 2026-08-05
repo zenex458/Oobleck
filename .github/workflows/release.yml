@@ -1,6 +1,9 @@
 name: release
 on:
   push:
+    branches:
+      - main
+      - feat/release-action
     tags:
       - '**'
 permissions:
