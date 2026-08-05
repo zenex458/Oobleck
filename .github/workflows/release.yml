@@ -33,6 +33,9 @@ jobs:
           fetch-depth: 0
           fetch-tags: true
           ref: ${{ vars.CURDATE }}
+        environment: ${{ inputs.environment }}
+        env:
+          CURDATE: ${{ vars.CURDATE }}
       - name: Build
         run: |
           # make release
@@ -42,6 +45,8 @@ jobs:
         with:
           tag_name: ${{ vars.CURDATE }}
           files: build/**
+        environment: ${{ inputs.environment }}          
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CURDATE: ${{ vars.CURDATE }}           
 
