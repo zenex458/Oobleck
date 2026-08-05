@@ -1,13 +1,10 @@
 name: release
 
 on:
-  tag:
+  workflow_run:
+    workflows: [tag]
     types:
       - completed
-    branches:
-      - main
-      - feat/release-action
-
 permissions:
   contents: write
 
