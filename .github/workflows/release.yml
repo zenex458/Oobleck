@@ -32,7 +32,7 @@ jobs:
         with:
           fetch-depth: 0
           fetch-tags: true
-          ref: ${{ vars.CURDATE }}
+          ref: ${{ env.CURDATE }}
       - name: Build
         run: |
           # make release
@@ -40,7 +40,7 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v3
         with:
-          tag_name: ${{ vars.curdate }}
+          tag_name: ${{ env.CURDATE }}
           files: build/**
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
