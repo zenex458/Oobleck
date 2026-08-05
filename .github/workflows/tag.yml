@@ -1,4 +1,4 @@
-name: tag
+name: tags
 
 on:
   push:
@@ -10,7 +10,7 @@ permissions:
   contents: write
 
 jobs:
-  tag:
+  tags:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
