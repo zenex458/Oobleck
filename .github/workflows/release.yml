@@ -29,22 +29,9 @@ jobs:
       - name: Build
         run: |
           make
-      - name: Upload artifact
-        uses: actions/upload-artifact@v7
-        with:
-          name: oob
-          path: build/**
-
-  rel:
-    runs-on: ubuntu-latest
-    needs: release
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v7
-      - name: Download artifacts
-        uses: actions/download-artifact@v8
-        with:
-          path: build
+      - name: Checkout tag
+        run: |
+          git checkout "$CURDATE"     
       - name: Release
         uses: softprops/action-gh-release@v3
         with:
